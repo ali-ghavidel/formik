@@ -1,10 +1,10 @@
 import './App.css';
-import Form from './form/Form';
+import RegisterForm from './form/RegisterForm';
 
 function App() {
   return (
     <div className="App d-flex justify-content-center align-items-center">
-      <Form />
+      <RegisterForm />
     </div>
   );
 }
