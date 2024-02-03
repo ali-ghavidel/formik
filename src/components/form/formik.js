@@ -2,9 +2,17 @@ import * as Yup from 'yup';
 export const initialValues = {
     name: '',
     email: '',
-    pass: ''
+    pass: '',
+    bio: '',
+    address: {
+        city: '',
+        postalcode: ''
+    },
+    phone: ["",""],
+    favorites: [""]
 }
 export const onSubmit =  (values) => {
+    console.log("submit: ");
     console.log(values);
 }
 export const validate = (values)=> {
@@ -27,5 +35,10 @@ export const validate = (values)=> {
 export const validationSchema = Yup.object({
     name: Yup.string().required("لطفا نام را وارد کنید"),
     email: Yup.string().required("لطفا ایمیل را وارد کنید").email("لطفا از ایمیل صحیح استفاده کنید"),
-    pass: Yup.string().required("لطفا رمز عبور را وارد کنید").min(8, 'رمز عبور باید حداقل 8 کاراکتر باشد')
+    pass: Yup.string().required("لطفا رمز عبور را وارد کنید").min(8, 'رمز عبور باید حداقل 8 کاراکتر باشد'),
+    address: Yup.object({
+        city: Yup.string().required("لطفا شهر را وارد کنید"),
+        postalcode: Yup.string().required("لطفا کدپستی را وارد کنید"),
+    }),
+    phone: Yup.array().of(Yup.string().required("لطفا این قسمت را وارد کنید"))
 })
