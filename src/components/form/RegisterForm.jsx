@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { ErrorMessage, FastField, Formik, Form, FieldArray } from 'formik';
@@ -8,7 +8,8 @@ import FavoritesField from './FavoritesField';
 import PersonalError from './PersonalError';
 
 const RegisterForm = () => {
-
+    const [savedData, setSavedData] = useState(null);
+    const [myValues, setMyValues] = useState(null);
     const validateBio = (value) => {
         let error;
         if (!value) {
@@ -19,16 +20,27 @@ const RegisterForm = () => {
         return error;
     }
 
+    useEffect(()=>{
+        const localSavedData = JSON.parse(localStorage.getItem('registerData'));
+        setSavedData(localSavedData);
+    },[])
+    const handleSaveData = (values)=> {
+        localStorage.setItem('registerData', JSON.stringify(values));
+    }
 
+    const handleGetSavedData = () => {
+        setMyValues(savedData)
+    }
     return (
 
         <div className='auth_container container-fluid d-flex justify-content-center align-items-center w-100 h-100-vh p-0'>
             <div className="row w-100 justify-content-center align-items-center">
-                <Formik initialValues={initialValues}
+                <Formik initialValues={myValues || initialValues}
                     onSubmit={onSubmit}
                     validationSchema={validationSchema}
                     // validateOnChange={false}
                     validateOnMount
+                    enableReinitialize
                 >
 
                     {(formik) => {
@@ -115,6 +127,19 @@ const RegisterForm = () => {
                                                 </div>
                                             ) : "ثبت نام"}
                                         </button>
+                                    </div>
+
+                                    <div className='text-center w-100'>
+                                        {formik.isValid ? (
+                                            <button type="button" className="btn btn-success" onClick={()=>handleSaveData(formik.values)} >
+                                                ذخیره اطلاعات در این سیستم
+                                            </button>
+                                        ) : null}
+                                        {savedData ? (
+                                            <button type="button" className="btn btn-success" onClick={handleGetSavedData} >
+                                            بازیابی اطلاعات از این سیستم
+                                        </button>
+                                        ) : null}
                                     </div>
                                 </Form>
                             </div>
