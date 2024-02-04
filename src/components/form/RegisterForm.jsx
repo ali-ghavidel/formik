@@ -36,17 +36,34 @@ const gender = [
         text: "زن"
     }
 ];
-
+const skills = [
+    {
+        id: 1,
+        value: "HTML"
+    },
+    {
+        id: 2,
+        value: "CSS"
+    },
+    {
+        id: 3,
+        value: "JS"
+    },
+    {
+        id: 4,
+        value: "REACT"
+    },
+]
 
 const RegisterForm = () => {
     const [savedData, setSavedData] = useState(null);
     const [myValues, setMyValues] = useState(null);
-   
-    useEffect(()=>{
+
+    useEffect(() => {
         const localSavedData = JSON.parse(localStorage.getItem('registerData'));
         setSavedData(localSavedData);
-    },[])
-    const handleSaveData = (values)=> {
+    }, [])
+    const handleSaveData = (values) => {
         localStorage.setItem('registerData', JSON.stringify(values));
     }
 
@@ -66,7 +83,7 @@ const RegisterForm = () => {
                 >
 
                     {(formik) => {
-                        console.log(formik);
+                        // console.log(formik);
                         return (
                             <div className='auth_box col-11 col-md-8 col-lg-6 col-xl-4 py-4 px-3'>
                                 <Form>
@@ -77,21 +94,28 @@ const RegisterForm = () => {
                                     <FormikControll controller="input" type="email" label="ایمیل" name="email" />
                                     <FormikControll controller="input" type="password" label="رمز عبور" name="password" />
                                     <FormikControll controller="textarea" type="text" label="بیوگرافی" name="bio" />
-                                    
+
                                     <FormikControll
-                                    controller="select"
-                                    label="تحصیلات"
-                                    name="education"
-                                    options={educations}
+                                        controller="select"
+                                        label="تحصیلات"
+                                        name="education"
+                                        options={educations}
                                     />
-                                    
+
                                     <FormikControll
-                                    controller="radio"
-                                    label="جنسیت"
-                                    name="gender"
-                                    options={gender}
+                                        controller="radio"
+                                        label="جنسیت"
+                                        name="gender"
+                                        options={gender}
                                     />
-                                    
+
+                                    <FormikControll
+                                        controller="checkbox"
+                                        label="مهارت ها"
+                                        name="skills"
+                                        options={skills}
+                                    />
+
                                     <div className='row'>
                                         <div className="mb-3 col-6">
                                             <label htmlFor="city" className="form-label">شهر</label>
@@ -152,14 +176,14 @@ const RegisterForm = () => {
 
                                     <div className='text-center w-100'>
                                         {formik.isValid ? (
-                                            <button type="button" className="btn btn-success" onClick={()=>handleSaveData(formik.values)} >
+                                            <button type="button" className="btn btn-success" onClick={() => handleSaveData(formik.values)} >
                                                 ذخیره اطلاعات در این سیستم
                                             </button>
                                         ) : null}
                                         {savedData ? (
                                             <button type="button" className="btn btn-success" onClick={handleGetSavedData} >
-                                            بازیابی اطلاعات از این سیستم
-                                        </button>
+                                                بازیابی اطلاعات از این سیستم
+                                            </button>
                                         ) : null}
                                     </div>
                                 </Form>

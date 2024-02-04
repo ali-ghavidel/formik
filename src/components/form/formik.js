@@ -11,7 +11,8 @@ export const initialValues = {
     phone: ["", ""],
     favorites: [""],
     education: "",
-    gender: ""
+    gender: "",
+    skills: []
 }
 export const onSubmit = (values, submitProps) => {
     // console.log(submitProps);
@@ -19,7 +20,7 @@ export const onSubmit = (values, submitProps) => {
     // console.log(values);
     setTimeout(() => {
         submitProps.setSubmitting(false);
-        // submitProps.resetForm();
+        submitProps.resetForm();
     }, 5000);
     
 }
@@ -35,6 +36,8 @@ export const validationSchema = Yup.object({
     favorites: Yup.array().of(Yup.string().required("لطفا این قسمت را وارد کنید")),
     education: Yup.string().required("لطفا تحصیلات را انتخاب کنید"),
     gender: Yup.string().required("لطفا جنسیت را انتخاب کنید"),
+    skills: Yup.array().of(Yup.string().required("لطفا مهارت را انتخاب کنید")),
+
 })
 
 //
