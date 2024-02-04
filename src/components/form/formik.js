@@ -9,10 +9,12 @@ export const initialValues = {
         postalcode: ''
     },
     phone: ["", ""],
-    favorites: [""]
+    favorites: [""],
+    education: "",
+    gender: ""
 }
 export const onSubmit = (values, submitProps) => {
-    console.log(submitProps);
+    // console.log(submitProps);
     // console.log("submit: ");
     // console.log(values);
     setTimeout(() => {
@@ -30,7 +32,9 @@ export const validationSchema = Yup.object({
         postalcode: Yup.string().required("لطفا کدپستی را وارد کنید"),
     }),
     phone: Yup.array().of(Yup.string().required("لطفا این قسمت را وارد کنید")),
-    favorites: Yup.array().of(Yup.string().required("لطفا این قسمت را وارد کنید"))
+    favorites: Yup.array().of(Yup.string().required("لطفا این قسمت را وارد کنید")),
+    education: Yup.string().required("لطفا تحصیلات را انتخاب کنید"),
+    gender: Yup.string().required("لطفا جنسیت را انتخاب کنید"),
 })
 
 //
@@ -50,4 +54,14 @@ export const validate = (values) => {
         errors.pass = "رمز عبور باید حداقل یک عدد و یک کاراکتر خاص داشته باشد"
     }
     return errors;
+}
+
+export const validateBio = (value) => {
+    let error;
+    if (!value) {
+        error = "این فیلد اجباری است!";
+    } else if (!/^[\u0600-\u06FF\s0-9a-zA-Z]+$/.test(value)) {
+        error = "لطفا قالب نوشتاری را رعایت کنید"
+    }
+    return error;
 }

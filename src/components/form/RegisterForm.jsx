@@ -6,20 +6,42 @@ import { initialValues, onSubmit, validationSchema } from './formik'
 import '../App.css';
 import FavoritesField from './FavoritesField';
 import PersonalError from './PersonalError';
+import FormikControll from '../formikControll/FormikControll';
+
+const educations = [
+    {
+        value: 1,
+        text: "ابتدایی"
+    },
+    {
+        value: 2,
+        text: "سیکل"
+    },
+    {
+        value: 3,
+        text: "دیپلم"
+    },
+    {
+        value: 4,
+        text: "لیسانس"
+    }
+];
+const gender = [
+    {
+        value: 1,
+        text: "مرد"
+    },
+    {
+        value: 2,
+        text: "زن"
+    }
+];
+
 
 const RegisterForm = () => {
     const [savedData, setSavedData] = useState(null);
     const [myValues, setMyValues] = useState(null);
-    const validateBio = (value) => {
-        let error;
-        if (!value) {
-            error = "این فیلد اجباری است!";
-        } else if (!/^[\u0600-\u06FF\-s0-9a-zA-Z]+$/.test(value)) {
-            error = "لطفا قالب نوشتاری را رعایت کنید"
-        }
-        return error;
-    }
-
+   
     useEffect(()=>{
         const localSavedData = JSON.parse(localStorage.getItem('registerData'));
         setSavedData(localSavedData);
@@ -51,26 +73,25 @@ const RegisterForm = () => {
                                     <h1 className='text-center'>
                                         <FontAwesomeIcon icon={faUserPlus} className='text-primary' />
                                     </h1>
-                                    <div className="mb-3">
-                                        <label htmlFor="name" className="form-label">نام</label>
-                                        <FastField type="text" className="form-control" id="name" name='name' />
-                                        <ErrorMessage name='name' component={PersonalError} />
-                                    </div>
-                                    <div className="mb-3">
-                                        <label htmlFor="email" className="form-label">ایمیل</label>
-                                        <FastField type="email" className="form-control" id="email" name='email' />
-                                        <ErrorMessage name='email' component={PersonalError} />
-                                    </div>
-                                    <div className="mb-3">
-                                        <label htmlFor="password" className="form-label">رمز عبور</label>
-                                        <FastField type="password" className="form-control" id="password" name='password' />
-                                        <ErrorMessage name='password' component={PersonalError} />
-                                    </div>
-                                    <div className="mb-3">
-                                        <label htmlFor="bio" className="form-label">بیوگرافی</label>
-                                        <FastField type="text" className="form-control" id="bio" name='bio' component="textarea" validate={validateBio} />
-                                        <ErrorMessage name='bio' component={PersonalError} />
-                                    </div>
+                                    <FormikControll controller="input" type="text" label="نام" name="name" />
+                                    <FormikControll controller="input" type="email" label="ایمیل" name="email" />
+                                    <FormikControll controller="input" type="password" label="رمز عبور" name="password" />
+                                    <FormikControll controller="textarea" type="text" label="بیوگرافی" name="bio" />
+                                    
+                                    <FormikControll
+                                    controller="select"
+                                    label="تحصیلات"
+                                    name="education"
+                                    options={educations}
+                                    />
+                                    
+                                    <FormikControll
+                                    controller="radio"
+                                    label="جنسیت"
+                                    name="gender"
+                                    options={gender}
+                                    />
+                                    
                                     <div className='row'>
                                         <div className="mb-3 col-6">
                                             <label htmlFor="city" className="form-label">شهر</label>
