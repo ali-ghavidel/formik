@@ -24,9 +24,15 @@ const RegisterForm = () => {
 
         <div className='auth_container container-fluid d-flex justify-content-center align-items-center w-100 h-100-vh p-0'>
             <div className="row w-100 justify-content-center align-items-center">
-                <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema} validateOnChange={false} >
+                <Formik initialValues={initialValues}
+                    onSubmit={onSubmit}
+                    validationSchema={validationSchema}
+                    // validateOnChange={false}
+                    validateOnMount
+                >
 
                     {(formik) => {
+                        console.log(formik);
                         return (
                             <div className='auth_box col-11 col-md-8 col-lg-6 col-xl-4 py-4 px-3'>
                                 <Form>
@@ -88,7 +94,7 @@ const RegisterForm = () => {
                                         </FieldArray>
                                     </div>
 
-                                    <div className='text-center w-100'>
+                                    {/* <div className='text-center w-100'>
                                         <button type="button" onClick={() => formik.validateForm()} className="btn btn-info">اعتبار سنجی فرم</button>
                                         <button type="button" onClick={() => formik.validateField('bio')} className="btn btn-info">اعتبار سنجی بیوگرافی</button>
                                     </div>
@@ -98,10 +104,17 @@ const RegisterForm = () => {
                                             email: true
                                         })} className="btn btn-success">مشاهده فرم</button>
                                         <button type="button" onClick={() => formik.setFieldTouched('bio')} className="btn btn-success">مشاهده بیوگرافی</button>
-                                    </div>
+                                    </div> */}
+
 
                                     <div className='text-center w-100'>
-                                        <button type="submit" className="btn btn-primary">ثبت نام</button>
+                                        <button type="submit" className="btn btn-primary" disabled={!formik.isValid || formik.isSubmitting}>
+                                            {formik.isSubmitting ? (
+                                                <div className="spinner-grow text-light" role="status">
+                                                    <span className="visually-hidden">Loading...</span>
+                                                </div>
+                                            ) : "ثبت نام"}
+                                        </button>
                                     </div>
                                 </Form>
                             </div>
@@ -112,28 +125,7 @@ const RegisterForm = () => {
             </div>
         </div>
     );
-    // const formik = useFormik({
-    //     initialValues,
-    //     onSubmit,
-    //     validationSchema
-    // })
-    // return (
-    //     <div>
-    //         <form className='form d-flex flex-column justify-content-center align-items-center' onSubmit={formik.handleSubmit}>
-    //             <FontAwesomeIcon icon={faUserPlus} color='blue' fontSize="2rem" />
-    //             <label htmlFor='name'>نام</label>
-    //             <input type='text' id='name' {...formik.getFieldProps('name')} />
-    //             {formik.errors.name && formik.touched.name ? <small className='text-danger'>{formik.errors.name}</small> : null}
-    //             <label htmlFor='email'>ایمیل</label>
-    //             <input type='email' id='email' {...formik.getFieldProps('email')} />
-    //             {formik.errors.email && formik.touched.email ? <small className='text-danger'>{formik.errors.email}</small> : null}
-    //             <label htmlFor='pass'>رمز عبور</label>
-    //             <input type='password' id='pass' {...formik.getFieldProps('pass')} />
-    //             {formik.errors.pass && formik.touched.pass ? <small className='text-danger'>{formik.errors.pass}</small> : null}
-    //             <button type='submit' className='btn btn-primary'>ثبت نام</button>
-    //         </form>
-    //     </div>
-    // );
+
 
 }
 

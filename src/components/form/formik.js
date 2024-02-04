@@ -11,9 +11,15 @@ export const initialValues = {
     phone: ["", ""],
     favorites: [""]
 }
-export const onSubmit = (values) => {
-    console.log("submit: ");
-    console.log(values);
+export const onSubmit = (values, submitProps) => {
+    console.log(submitProps);
+    // console.log("submit: ");
+    // console.log(values);
+    setTimeout(() => {
+        submitProps.setSubmitting(false);
+        // submitProps.resetForm();
+    }, 5000);
+    
 }
 export const validationSchema = Yup.object({
     name: Yup.string().required("لطفا نام را وارد کنید"),
